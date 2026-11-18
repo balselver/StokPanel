@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/StokPanel.Api/StokPanel.Api.csproj" />
+    <Project Path="src/StokPanel.Application/StokPanel.Application.csproj" />
+    <Project Path="src/StokPanel.Domain/StokPanel.Domain.csproj" />
+    <Project Path="src/StokPanel.Infrastructure/StokPanel.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/StokPanel.Domain.Tests/StokPanel.Domain.Tests.csproj" />
+  </Folder>
+</Solution>
