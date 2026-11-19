@@ -8,5 +8,6 @@ namespace StokPanel.Application.Abstraction
     {
         string? UserId { get; }
         string? UserName { get; }
+        bool IsInRole(string role);
     }
 }

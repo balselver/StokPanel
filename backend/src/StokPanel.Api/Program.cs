@@ -3,6 +3,7 @@ using StokPanel.Api.Endpoints;
 using StokPanel.Api.Infrastructure;
 using StokPanel.Application;
 using StokPanel.Application.Security;
+using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,8 +27,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy(Policies.AdminOnly, policy => policy.RequireRole(Roles.Admin));
 
-builder.Services.AddExceptionHandler<DomainExceptionHandler>();
+builder.Services.AddExceptionHandler<AppExceptionHandler>();
 builder.Services.AddProblemDetails();
+
+// Enum'lar JSON'da sayı değil metin olsun: "In" / "Out"
+builder.Services.ConfigureHttpJsonOptions(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -50,5 +54,9 @@ app.UseAuthorization();
 
 app.MapGet("/api/health", () => Results.Ok(new { status = "ok", time = DateTime.UtcNow }));
 app.MapAuthEndpoints();
+app.MapCategoryEndpoints();
+app.MapProductEndpoints();
+app.MapDashboardEndpoints();
+app.MapUserEndpoints();
 
 app.Run();

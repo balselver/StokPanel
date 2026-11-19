@@ -8,5 +8,6 @@ namespace StokPanel.Infrastructure.Identity
     {
         public string? UserId => accessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
         public string? UserName => accessor.HttpContext?.User.Identity?.Name;
+        public bool IsInRole(string role) => accessor.HttpContext?.User.IsInRole(role) ?? false;
     }
 }

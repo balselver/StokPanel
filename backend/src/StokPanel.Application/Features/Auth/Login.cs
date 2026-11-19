@@ -9,7 +9,7 @@ namespace StokPanel.Application.Features.Auth
 
     public sealed class LoginHandler(IIdentityService identityService)
     {
-        public Task<UserDto> LoginHandleAsync(LoginCommand command)
+        public Task<UserDto?> LoginHandleAsync(LoginCommand command)
             => identityService.LoginAsync(command.Email?.Trim() ?? string.Empty, command.Password, command.RememberMe);
     }   
 
@@ -20,7 +20,7 @@ namespace StokPanel.Application.Features.Auth
 
     public sealed class GetCurrentUserHandler(ICurrentUser currentUser, IIdentityService identityService)
     {
-        public async Task<UserDto> GetCurrHandleAsync()
+        public async Task<UserDto?> GetCurrHandleAsync()
             => currentUser.UserId is null ? null : await identityService.GetUserAsync(currentUser.UserId);
     }
     

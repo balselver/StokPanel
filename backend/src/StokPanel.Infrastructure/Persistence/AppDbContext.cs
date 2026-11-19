@@ -11,8 +11,7 @@ namespace StokPanel.Infrastructure.Persistence
 {
     internal sealed class AppDbContext : IdentityDbContext<ApplicationUser>, IAppDbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
+        public AppDbContext(DbContextOptions<AppDbContext> options) :base(options) { }
 
         public DbSet<Category> Categories => Set<Category>();
 
@@ -24,6 +23,11 @@ namespace StokPanel.Infrastructure.Persistence
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        }
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            // Bütün DateTime özelliklerine uygula
+            configurationBuilder.Properties<DateTime>().HaveConversion<UtcDateTimeConverter>();
         }
     }
 }
