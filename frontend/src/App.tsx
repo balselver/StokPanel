@@ -8,6 +8,7 @@ import { RegisterPage } from './features/auth/RegisterPage.tsx'
 import { DashboardPage } from './features/dashboard/DashboardPage.tsx'
 import { ProductsPage } from './features/products/ProductsPage.tsx'
 import { NotFoundPage } from './NotFoundPage.tsx'
+import { ProductDetailPage } from './features/products/ProductDetailPage.tsx'
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             <Route element={<Layout />}>
               <Route index element={<DashboardPage />} />
               <Route path="urunler" element={<ProductsPage />} />
+              <Route path="urunler/:id" element={<ProductDetailPage />} />
 
               {/* Sadece admin */}
               <Route element={<RequireAuth adminOnly />}>

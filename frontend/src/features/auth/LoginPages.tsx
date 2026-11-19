@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from './useAuth'
+import { useAuth } from './useAuth.ts'
 
 export function LoginPage() {
     const { user, login } = useAuth()
@@ -9,6 +9,7 @@ export function LoginPage() {
     const [error, setError] = useState<string | null>(null)
     const [submitting, setSubmitting] = useState(false)
 
+    // Korumalı bir sayfadan geldiyse giriş sonrası oraya dön
     const from = (location.state as { from?: string } | null)?.from ?? '/'
 
     if (user) return <Navigate to={from} replace />
@@ -35,32 +36,43 @@ export function LoginPage() {
 
     return (
         <div className="auth-page">
-            <div className="card auth-card">
-                <h1 className="auth-brand">📦 StokPanel</h1>
-                <p className="muted">Hesabınıza giriş yapın</p>
+            <div className="auth-card">
+                <div className="auth-logo">📦 StokPanel</div>
+                <h1 className="auth-title">Hoş geldiniz!</h1>
 
                 {error && <div className="alert alert-error">{error}</div>}
 
-                <form onSubmit={handleSubmit}>
-                    <div className="field">
-                        <label htmlFor="email">E-posta</label>
-                        <input id="email" name="email" type="email" autoComplete="email" required />
-                    </div>
-                    <div className="field">
-                        <label htmlFor="password">Şifre</label>
-                        <input id="password" name="password" type="password" autoComplete="current-password" required />
-                    </div>
-                    <label className="checkbox">
+                <form className="auth-form" onSubmit={handleSubmit}>
+                    <input
+                        className="auth-input"
+                        name="email"
+                        type="email"
+                        placeholder="E-posta"
+                        aria-label="E-posta"
+                        autoComplete="email"
+                        required
+                    />
+                    <input
+                        className="auth-input"
+                        name="password"
+                        type="password"
+                        placeholder="Şifre"
+                        aria-label="Şifre"
+                        autoComplete="current-password"
+                        required
+                    />
+
+                    <label className="auth-check">
                         <input name="rememberMe" type="checkbox" /> Beni hatırla
                     </label>
 
-                    <button className="btn btn-primary btn-block" disabled={submitting}>
+                    <button className="auth-button" disabled={submitting}>
                         {submitting ? 'Giriş yapılıyor…' : 'Giriş yap'}
                     </button>
                 </form>
 
                 <p className="auth-footer">
-                    Hesabınız yok mu? <Link to="/kayit">Kayıt olun</Link>
+                    Hesabınız yok mu?<Link to="/kayit">Kayıt olun</Link>
                 </p>
             </div>
         </div>
