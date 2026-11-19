@@ -28,7 +28,10 @@ namespace StokPanel.Infrastructure.Persistence.Configurations
                 .HasMaxLength(Product.UnitMaxLength)
                 .IsRequired();
 
-            builder.Property(p => p.Quantity).HasPrecision(18, 3);
+            builder.Property(p => p.Quantity)
+                .HasPrecision(18, 3)
+                .IsConcurrencyToken();
+            //aynı anda iki çıış yapılırsa ikincisi 409 alır
             builder.Property(p => p.CriticalLevel).HasPrecision(18, 3);
 
 

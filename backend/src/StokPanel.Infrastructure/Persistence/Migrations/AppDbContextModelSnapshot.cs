@@ -201,6 +201,7 @@ namespace StokPanel.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<decimal>("Quantity")
+                        .IsConcurrencyToken()
                         .HasPrecision(18, 3)
                         .HasColumnType("decimal(18,3)");
 

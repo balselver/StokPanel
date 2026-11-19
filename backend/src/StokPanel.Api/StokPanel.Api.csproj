@@ -1,13 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>d51c296e-4953-4cce-85ae-389db9d850c9</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.15" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="10.*" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.*" />
   </ItemGroup>
 
