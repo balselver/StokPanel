@@ -1,5 +1,5 @@
 import { api } from '../../api/client.ts'
-import type { CreateMovementRequest, Movement, Product, ProductFilter } from './types.ts'
+import type { CreateMovementRequest, Movement, Product, ProductFilter, SaveProductRequest } from './types.ts'
 
 export const productsApi = {
     list: (filter: ProductFilter) => {
@@ -19,4 +19,10 @@ export const productsApi = {
 
     createMovement: (id: string, request: CreateMovementRequest) =>
         api.post<Movement>(`/api/products/${id}/movements`, request),
+
+    create: (request: SaveProductRequest) => api.post<{ id: string }>('/api/products', request),
+
+    update: (id: string, request: SaveProductRequest) => api.put<void>(`/api/products/${id}`, request),
+
+    setActive: (id: string, isActive: boolean) => api.patch<void>(`/api/products/${id}/active`, { isActive }),
 }

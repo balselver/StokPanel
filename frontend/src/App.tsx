@@ -9,31 +9,33 @@ import { DashboardPage } from './features/dashboard/DashboardPage.tsx'
 import { ProductsPage } from './features/products/ProductsPage.tsx'
 import { NotFoundPage } from './NotFoundPage.tsx'
 import { ProductDetailPage } from './features/products/ProductDetailPage.tsx'
-
+import { ConfirmProvider } from './components/ConfirmProvider.tsx'
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/kayit" element={<RegisterPage />} />
+        <ConfirmProvider>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/kayit" element={<RegisterPage />} />
 
-          {/* Giriş gerekli */}
-          <Route element={<RequireAuth />}>
-            <Route element={<Layout />}>
-              <Route index element={<DashboardPage />} />
-              <Route path="urunler" element={<ProductsPage />} />
-              <Route path="urunler/:id" element={<ProductDetailPage />} />
+            {/* Giriş gerekli */}
+            <Route element={<RequireAuth />}>
+              <Route element={<Layout />}>
+                <Route index element={<DashboardPage />} />
+                <Route path="urunler" element={<ProductsPage />} />
+                <Route path="urunler/:id" element={<ProductDetailPage />} />
 
-              {/* Sadece admin */}
-              <Route element={<RequireAuth adminOnly />}>
-                <Route path="yonetim" element={<AdminPage />} />
+                {/* Sadece admin */}
+                <Route element={<RequireAuth adminOnly />}>
+                  <Route path="yonetim" element={<AdminPage />} />
+                </Route>
               </Route>
             </Route>
-          </Route>
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </ConfirmProvider>
       </AuthProvider>
     </BrowserRouter>
   )

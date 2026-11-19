@@ -35,3 +35,11 @@ export type CreateMovementRequest = {
     quantity: number
     note: string | null
 }
+
+export type SaveProductRequest = {
+    name: string
+    sku: string
+    unit: string
+    categoryId: string
+    criticalLevel: number
+}

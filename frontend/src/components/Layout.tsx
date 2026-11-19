@@ -1,8 +1,19 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { useAuth } from '../features/auth/useAuth'
+import { useAuth } from '../features/auth/useAuth.ts'
+import { useConfirm } from './useConfirm.ts'
 
 export function Layout() {
     const { user, isAdmin, logout } = useAuth()
+    const confirm = useConfirm()
+
+    async function handleLogout() {
+        const ok = await confirm({
+            title: 'Çıkış yapılsın mı?',
+            message: 'Oturumunuz kapatılacak. Tekrar giriş yapmanız gerekecek.',
+            confirmText: 'Çıkış yap',
+        })
+        if (ok) await logout()
+    }
 
     return (
         <>
@@ -19,7 +30,7 @@ export function Layout() {
                     <div className="user-box">
                         <span className="user-name">{user?.fullName}</span>
                         <span className={isAdmin ? 'badge badge-admin' : 'badge'}>{isAdmin ? 'Admin' : 'Personel'}</span>
-                        <button className="btn btn-secondary btn-sm" onClick={() => logout()}>Çıkış</button>
+                        <button className="btn btn-secondary btn-sm" onClick={handleLogout}>Çıkış</button>
                     </div>
                 </div>
             </header>

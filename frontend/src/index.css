@@ -768,6 +768,62 @@ textarea {
   }
 }
 
+/* Sekmeler */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.tab {
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.toolbar-end {
+  margin-left: auto;
+}
+
+/* Form ve onay */
+.dialog-wide {
+  width: min(560px, calc(100vw - 32px));
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 14px;
+}
+
+.form-grid .full {
+  grid-column: 1 / -1;
+}
+
+.confirm-message {
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 8px 0 20px;
+}
+
 /* Mobil */
 @media (max-width: 640px) {
   .app-header-inner {
