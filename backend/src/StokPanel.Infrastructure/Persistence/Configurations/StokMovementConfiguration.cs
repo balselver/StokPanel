@@ -28,18 +28,13 @@ namespace StokPanel.Infrastructure.Persistence.Configurations
                 .HasMaxLength(450)
                 .IsRequired();
 
-            builder.HasOne<Product>()
+            builder.HasOne<ApplicationUser>()
                 .WithMany()
                 .HasForeignKey(m => m.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasIndex(m => new { m.ProductId, m.CreatedAtUtc });
-            builder.HasIndex(m => m.CreatedAtUtc);
-            
-
-
-        
-
+            builder.HasIndex(m => m.CreatedAtUtc); 
         }
     }
 }
