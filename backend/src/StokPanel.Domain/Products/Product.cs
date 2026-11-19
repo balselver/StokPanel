@@ -7,7 +7,7 @@ using StokPanel.Domain.Products;
 
 namespace StokPanel.Domain.Products
 {
-    internal class Product : AggregateRoot
+    public sealed class Product : AggregateRoot
     {
         public const int NameMaxLength = 150;
         public const int SkuMaxLength = 50;
