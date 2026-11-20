@@ -41,6 +41,7 @@ var app = builder.Build();
 await app.Services.InitializeDatabaseAsync();
 
 app.UseExceptionHandler();
+app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -59,5 +60,11 @@ app.MapProductEndpoints();
 app.MapDashboardEndpoints();
 app.MapUserEndpoints();
 app.MapAuditLogEndpoints();
+
+// Bilinmeyen /api adresleri React sayfası değil, JSON 404 dönsün
+app.Map("/api/{**rest}", () => Results.NotFound(new { error = "Böyle bir API ucu yok" }));
+
+// Geri kalan her adres React'a gider (/urunler, /yonetim gibi React Router adresleri)
+app.MapFallbackToFile("index.html");
 
 app.Run();

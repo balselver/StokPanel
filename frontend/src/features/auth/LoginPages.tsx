@@ -1,13 +1,30 @@
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from './useAuth.ts'
 
+
+const IS_DEMO = import.meta.env.VITE_DEMO_MODE === 'true'
+const DEMO_PASSWORD = import.meta.env.VITE_DEMO_PASSWORD ?? ''
+
+const DEMO_ACCOUNTS = [
+    { label: 'Admin', email: 'admin@stokpanel.local' },
+    { label: 'Personel', email: 'personel@stokpanel.local' },
+]
 export function LoginPage() {
     const { user, login } = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
     const [error, setError] = useState<string | null>(null)
     const [submitting, setSubmitting] = useState(false)
+
+    const formRef = useRef<HTMLFormElement>(null)
+
+    function fillDemo(email: string) {
+        const form = formRef.current
+        if (!form) return
+            ; (form.elements.namedItem('email') as HTMLInputElement).value = email
+            ; (form.elements.namedItem('password') as HTMLInputElement).value = DEMO_PASSWORD
+    }
 
     // Korumalı bir sayfadan geldiyse giriş sonrası oraya dön
     const from = (location.state as { from?: string } | null)?.from ?? '/'
@@ -42,7 +59,21 @@ export function LoginPage() {
 
                 {error && <div className="alert alert-error">{error}</div>}
 
-                <form className="auth-form" onSubmit={handleSubmit}>
+                {IS_DEMO && (
+                    <div className="demo-box">
+                        <strong>Demo hesapları</strong>
+                        <span className="muted">Bir hesap seçin, bilgiler otomatik dolsun:</span>
+                        <div className="demo-buttons">
+                            {DEMO_ACCOUNTS.map(a => (
+                                <button key={a.email} type="button" className="btn btn-secondary btn-sm" onClick={() => fillDemo(a.email)}>
+                                    {a.label} olarak dene
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                <form ref={formRef} className="auth-form" onSubmit={handleSubmit}>
                     <input
                         className="auth-input"
                         name="email"
