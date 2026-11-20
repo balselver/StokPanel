@@ -1,6 +1,7 @@
 ﻿using StokPanel.Application.Abstraction;
 using StokPanel.Application.Common;
 using StokPanel.Application.Security;
+using StokPanel.Domain.AuditLogs;
 using StokPanel.Domain.Common;
 
 namespace StokPanel.Application.Features.Users
@@ -12,7 +13,7 @@ namespace StokPanel.Application.Features.Users
         public Task<List<UserDto>> HandleAsync() => identityService.GetUsersAsync();
     }
 
-    public sealed class SetUserRoleHandler(IIdentityService identityService, ICurrentUser currentUser)
+    public sealed class SetUserRoleHandler(IIdentityService identityService, ICurrentUser currentUser, IAppDbContext db)
     {
         public async Task HandleAsync(string userId, SetRoleRequest request)
         {
@@ -23,8 +24,17 @@ namespace StokPanel.Application.Features.Users
             if (userId == currentUser.UserId)
                 throw new DomainException("Kendi rolünüzü değiştiremezsiniz");
 
-            if (!await identityService.SetRoleAsync(userId, request.Role))
-                throw new NotFoundException("Kullanıcı bulunamadı");
+            var target = await identityService.GetUserAsync(userId)
+                ?? throw new NotFoundException("Kullanıcı bulunamadı");
+
+            await identityService.SetRoleAsync(userId, request.Role);
+
+            // Rol değişikliği Identity'de yapılıyor, domain event üretmiyor → log elle ekleniyor
+            db.AuditLogs.Add(AuditLog.Create(
+                AuditEntityTypes.User, "Rol değişti", userId,
+                $"{target.FullName} kullanıcısının rolü \"{request.Role}\" yapıldı",
+                currentUser.UserId, currentUser.UserName));
+            await db.SaveChangesAsync();
         }
     }
 }

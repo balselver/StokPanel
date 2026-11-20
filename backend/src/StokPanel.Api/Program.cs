@@ -58,5 +58,6 @@ app.MapCategoryEndpoints();
 app.MapProductEndpoints();
 app.MapDashboardEndpoints();
 app.MapUserEndpoints();
+app.MapAuditLogEndpoints();
 
 app.Run();

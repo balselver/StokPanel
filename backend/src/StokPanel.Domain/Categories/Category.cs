@@ -26,6 +26,9 @@ namespace StokPanel.Domain.Categories
             Raise(new CategoryUpdateEvent(Id, Name));
         }
 
+        // Silinmeden önce "silindi" notunu bırak (silme EF'in işi, olay Domain'in)
+        public void MarkDeleted() => Raise(new CategoryDeletedEvent(Id, Name));
+
         private void SetDetails(string name, string? description)
         {
             //kontroller
