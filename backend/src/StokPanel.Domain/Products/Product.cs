@@ -66,7 +66,7 @@ namespace StokPanel.Domain.Products
             EnsurePositive(quantity);
             if (quantity > Quantity)
                 throw new DomainException(
-                    $"Yetersiz stok. Mevcut {Quantity:0.###} {Unit}, istenen: {quantity:0.###} {Unit}");
+                    $"Yetersiz stok. Mevcut: {Quantity:0.###} {Unit}, istenen: {quantity:0.###} {Unit}");
 
             var oldQuantity = Quantity;
             Quantity-= quantity;

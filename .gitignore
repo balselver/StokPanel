@@ -480,3 +480,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Derlenmiş frontend (npm run build çıktısı)
+backend/src/StokPanel.Api/wwwroot/
