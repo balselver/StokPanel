@@ -55,6 +55,8 @@ namespace StokPanel.Application.Features.Categories
             if (await db.Products.AnyAsync(p => p.CategoryId == id, ct))
                 throw new DomainException("Bu kategoride ürün var. Önce ürünleri başka bir kategoriye taşıyın");
 
+
+            category.MarkDeleted();
             db.Categories.Remove(category);
             await db.SaveChangesAsync(ct);
         }

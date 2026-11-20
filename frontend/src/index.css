@@ -824,6 +824,19 @@ textarea {
   margin: 8px 0 20px;
 }
 
+/* Sayfalama */
+.pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
 /* Mobil */
 @media (max-width: 640px) {
   .app-header-inner {

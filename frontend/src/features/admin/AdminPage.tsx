@@ -2,11 +2,13 @@ import { useSearchParams } from 'react-router-dom'
 import { CategoriesTab } from './CategoriesTab.tsx'
 import { ProductsTab } from './ProductsTab.tsx'
 import { UsersTab } from './UsersTab.tsx'
+import { AuditTab } from './AuditTab.tsx'
 
 const TABS = [
     { key: 'urunler', label: 'Ürünler' },
     { key: 'kategoriler', label: 'Kategoriler' },
     { key: 'kullanicilar', label: 'Kullanıcılar' },
+    { key: 'gecmis', label: 'İşlem Geçmişi' },
 ] as const
 
 export function AdminPage() {
@@ -36,6 +38,7 @@ export function AdminPage() {
             {active === 'urunler' && <ProductsTab />}
             {active === 'kategoriler' && <CategoriesTab />}
             {active === 'kullanicilar' && <UsersTab />}
+            {active === 'gecmis' && <AuditTab />}
         </>
     )
 }

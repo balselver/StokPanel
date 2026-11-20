@@ -1,4 +1,5 @@
-﻿using StokPanel.Application.Features.Dashboard;
+﻿using StokPanel.Application.Features.AuditLogs;
+using StokPanel.Application.Features.Dashboard;
 using StokPanel.Application.Features.Users;
 using StokPanel.Application.Security;
 
@@ -24,6 +25,14 @@ namespace StokPanel.Api.Endpoints
                 await h.HandleAsync(id, r);
                 return Results.NoContent();
             });
+        }
+
+        public static void MapAuditLogEndpoints(this IEndpointRouteBuilder app)
+        {
+            app.MapGet("/api/audit-logs", ([AsParameters] AuditLogFilter filter, GetAuditLogsHandler h, CancellationToken ct)
+                    => h.HandleAsync(filter, ct))
+                .WithTags("İşlem Geçmişi")
+                .RequireAuthorization(Policies.AdminOnly);
         }
     }
 }
