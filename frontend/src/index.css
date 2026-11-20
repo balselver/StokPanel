@@ -619,6 +619,7 @@ textarea:focus {
   flex-wrap: wrap;
 }
 
+th.actions,
 td.actions {
   display: table-cell;
 }
